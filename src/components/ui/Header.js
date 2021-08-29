@@ -107,7 +107,12 @@ const useStyles = makeStyles(theme => ({
     backgroundColor: theme.palette.common.orange
   },
   drawerItemSelected: {
-    opacity: 1
+    "& .MuiListItemText-root" : {
+      opacity: 1
+    }
+  },
+  appbar: {
+    zIndex: theme.zIndex.modal + 1
   }
 }));
 
@@ -144,12 +149,7 @@ export default function Header(props) {
   };
 
   const menuOptions = [
-    {
-      name: "Services", 
-      link: "/services", 
-      activeIndex: 1, 
-      selectedIndex: 0
-    },
+    { name: "Services", link: "/services", activeIndex: 1, selectedIndex: 0 },
     {
       name: "Custom Software Development", 
       link: "/customsoftware", 
@@ -168,14 +168,10 @@ export default function Header(props) {
       activeIndex: 1, 
       selectedIndex: 3
     }
-  ]
+  ];
 
   const routes = [
-    {
-      name: "Home", 
-      link: "/",
-      activeIndex: 0
-    },
+    { name: "Home", link: "/", activeIndex: 0 },
     {
       name: "Services", 
       link: "/services",
@@ -199,7 +195,7 @@ export default function Header(props) {
       link: "/contact",
       activeIndex: 4
     }
-  ]
+  ];
 
   useEffect(() => {
     [...menuOptions, ...routes].forEach(route => {
@@ -227,15 +223,17 @@ export default function Header(props) {
         indicatorColor="primary"
       >
         {routes.map((route, index) => (
-          <Tab className={classes.tab} component={Link} to={route.link} 
-          label={route.name} aria-owns={route.ariaOwns} aria-haspopup={route.ariaPopup} onMouseOver={route.mouseOver} />
+          <Tab
+            key={`${route}${index}`} 
+            className={classes.tab} 
+            component={Link} 
+            to={route.link} 
+            label={route.name} 
+            aria-owns={route.ariaOwns} 
+            aria-haspopup={route.ariaPopup} 
+            onMouseOver={route.mouseOver} 
+          />
         ))}
-        <Tab 
-          className={classes.tab} 
-          component={Link} 
-          to="/" 
-          label="Home" 
-        />
       </Tabs>
       <Button 
         variant="contained" 
@@ -255,10 +253,12 @@ export default function Header(props) {
         classes={{paper: classes.menu}}
         MenuListProps={{onMouseLeave: handleClose}}
         elevation={0}
+        style={{zIndex: 1302}}
+        keepMounted
       >
         {menuOptions.map((option, i) => (
           <MenuItem 
-            key={option}
+            key={`${option}${{i}}`}
             component={Link} 
             to={option.link}
             classes={{root: classes.menuItem}}
@@ -286,86 +286,39 @@ export default function Header(props) {
         onOpen={() => setOpenDrawer(true)}
         classes={{paper: classes.drawer}}
       >
+        <div className={classes.toolbarMargin} />
         <List disablePadding>
-          <ListItem 
-            onClick={() => {setOpenDrawer(false); setValue(0)}} 
-            divider button 
-            component={Link} 
-            to="/"
-            selected={value === 0}
-          >
-            <ListItemText 
-              className={value === 0 ? [classes.drawerItem, classes.drawerItemSelected] : classes.drawerItem} 
-              disableTypography
+          {routes.map( route => (
+            <ListItem 
+              divider 
+              key={`${route}${route.activeIndex}`} 
+              button 
+              component={Link} 
+              to={route.link} 
+              selected={ value === route.activeIndex } 
+              cllases={{selected: classes.drawerItemSelected}}
+              onClick={() => {
+                setOpenDrawer(false); 
+                setValue(route.activeIndex)
+              }}
             >
-              Home
-            </ListItemText>
-          </ListItem>
-          <ListItem 
-            onClick={() => {setOpenDrawer(false); setValue(1)}} 
-            divider button 
-            component={Link} 
-            to="/services"
-            selected={value === 1}
-          >
-            <ListItemText 
-              className={value === 1 ? [classes.drawerItem, classes.drawerItemSelected] : classes.drawerItem} 
-              disableTypography
-            >
-              Services
-            </ListItemText>
-          </ListItem>
-          <ListItem 
-            onClick={() => {setOpenDrawer(false); setValue(2)}} 
-            divider button 
-            component={Link} 
-            to="/revolution"
-            selected={value === 2}
-          >
-            <ListItemText 
-              className={value === 2 ? [classes.drawerItem, classes.drawerItemSelected] : classes.drawerItem} 
-              disableTypography
-            >
-              The Revolution
-            </ListItemText>
-          </ListItem>
-          <ListItem 
-            onClick={() => {setOpenDrawer(false); setValue(3)}} 
-            divider button 
-            component={Link} 
-            to="/about"
-            selected={value === 3}
-          >
-            <ListItemText 
-              className={value === 3 ? [classes.drawerItem, classes.drawerItemSelected] : classes.drawerItem} 
-              disableTypography
-            >
-              About us
-            </ListItemText>
-          </ListItem>
-          <ListItem 
-            onClick={() => {setOpenDrawer(false); setValue(4)}} 
-            divider button 
-            component={Link} 
-            to="/contact"
-            selected={value === 4}
-          >
-            <ListItemText 
-              className={value === 4 ? [classes.drawerItem, classes.drawerItemSelected] : classes.drawerItem} 
-              disableTypography
-            >
-              Contact Us
-            </ListItemText>
-          </ListItem>
+              <ListItemText 
+                className={classes.drawerItem} 
+                disableTypography
+              >
+                {route.name}
+              </ListItemText>
+            </ListItem>
+          ))}
           <ListItem 
             onClick={() => {setOpenDrawer(false); setValue(5)}} 
             divider button component={Link} 
-            className={classes.drawerItemEstimate} 
+            classes={{root: classes.drawerItemEstimate, selected: classes.drawerItemSelected}}
             to="/estimate"
             selected={value === 5}
           >
             <ListItemText 
-              className={value === 5 ? [classes.drawerItem, classes.drawerItemSelected] : classes.drawerItem} 
+              className={classes.drawerItem} 
               disableTypography
             >
               Free Estimate
@@ -386,7 +339,7 @@ export default function Header(props) {
   return (
     <React.Fragment>
       <ElevationScroll>
-        <AppBar position="fixed">
+        <AppBar position="fixed" className={classes.appbar}>
           <Toolbar disableGutters>
             <Button 
               component={Link} 
