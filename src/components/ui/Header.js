@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import useScrollTrigger from '@material-ui/core/useScrollTrigger';
-import { makeStyles} from "@material-ui/styles"
+import { makeStyles } from "@material-ui/styles";
 import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
 import Button from "@material-ui/core/Button";
@@ -148,7 +148,8 @@ export default function Header(props) {
     setOpenMenu(false);
   };
 
-  const menuOptions = [
+  const menuOptions = useMemo(() => {
+    return ([
     { name: "Services", link: "/services", activeIndex: 1, selectedIndex: 0 },
     {
       name: "Custom Software Development", 
@@ -168,9 +169,10 @@ export default function Header(props) {
       activeIndex: 1, 
       selectedIndex: 3
     }
-  ];
+  ])},[]);
 
-  const routes = [
+  const routes = useMemo(() => {
+    return ([
     { name: "Home", link: "/", activeIndex: 0 },
     {
       name: "Services", 
@@ -195,8 +197,10 @@ export default function Header(props) {
       link: "/contact",
       activeIndex: 4
     }
-  ];
+    // eslint-disable-next-line
+  ])},[]);
 
+  
   useEffect(() => {
     [...menuOptions, ...routes].forEach(route => {
       switch (window.location.pathname) {
