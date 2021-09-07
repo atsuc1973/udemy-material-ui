@@ -1,20 +1,20 @@
-import { createTheme } from '@material-ui/core/styles';
+import { createMuiTheme } from "@material-ui/core/styles";
 
 const arcBlue = "#0B72B9";
 const arcOrange = "#FFBA60";
 const arcGrey = "#868686";
 
-export default createTheme({
+export default createMuiTheme({
   palette: {
     common: {
-      blue: `${arcBlue}`,
-      orange: `${arcOrange}`
+      blue: arcBlue,
+      orange: arcOrange
     },
     primary: {
-      main: `${arcBlue}`
+      main: arcBlue
     },
     secondary: {
-      main: `${arcOrange}`
+      main: arcOrange
     }
   },
   typography: {
@@ -22,11 +22,12 @@ export default createTheme({
       fontFamily: "Raleway",
       textTransform: "none",
       fontWeight: 700,
+      color: "white",
       fontSize: "1rem"
     },
     estimate: {
       fontFamily: "Pacifico",
-      fonsSize: "1rem",
+      fontSize: "1rem",
       textTransform: "none",
       color: "white"
     },
@@ -47,6 +48,11 @@ export default createTheme({
       fontSize: "1.75rem",
       color: arcBlue,
       fontWeight: 700
+    },
+    h6: {
+      fontWeight: 500,
+      fontFamily: "Raleway",
+      color: arcBlue
     },
     subtitle1: {
       fontSize: "1.25rem",
@@ -76,6 +82,28 @@ export default createTheme({
       borderRadius: 50,
       fontFamily: "Roboto",
       fontWeight: "bold"
+    }
+  },
+  overrides: {
+    MuiInputLabel: {
+      root: {
+        color: arcBlue,
+        fontSize: "1rem"
+      }
+    },
+    MuiInput: {
+      root: {
+        color: arcGrey,
+        fontWeight: 300
+      },
+      underline: {
+        "&:before": {
+          borderBottom: `2px solid ${arcBlue}`
+        },
+        "&:hover:not($disabled):not($focused):not($error):before": {
+          borderBottom: `2px solid ${arcBlue}`
+        }
+      }
     }
   }
 });
