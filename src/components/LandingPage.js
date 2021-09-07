@@ -345,6 +345,82 @@ export default function LandingPage() {
             <div className={classes.revolutionBackground} />
           </Grid>
         </Grid>
+        <Grid item>
+        {/*-----Information Block-----*/}
+        <Grid
+          container
+          style={{ height: "80em" }}
+          alignItems="center"
+          direction="row"
+          className={classes.infoBackground}
+        >
+          <Grid
+            item
+            container
+            style={{
+              textAlign: matchesXS ? "center" : "inherit"
+            }}
+            direction={matchesXS ? "column" : "row"}
+          >
+            <Grid
+              item
+              sm
+              style={{ marginLeft: matchesXS ? 0 : matchesSM ? "2em" : "5em" }}
+            >
+              <Grid
+                container
+                style={{ marginBottom: matchesXS ? "10em" : 0 }}
+                direction="column"
+              >
+                <Typography variant="h2" style={{ color: "white" }}>
+                  About Us
+                </Typography>
+                <Typography variant="subtitle2">Let's get personal.</Typography>
+                <Grid item>
+                  <Button
+                    variant="outlined"
+                    style={{ color: "white", borderColor: "white" }}
+                    className={classes.learnButton}
+                  >
+                    <span style={{ marginRight: 10 }}>Learn More</span>
+                    <ButtonArrow width={10} height={10} fill="white" />
+                  </Button>
+                </Grid>
+              </Grid>
+            </Grid>
+            <Grid
+              item
+              sm
+              style={{
+                marginRight: matchesXS ? 0 : matchesSM ? "2em" : "5em",
+                textAlign: matchesXS ? "center" : "right"
+              }}
+            >
+              <Grid container direction="column">
+                <Typography variant="h2" style={{ color: "white" }}>
+                  Contact Us
+                </Typography>
+                <Typography variant="subtitle2">
+                  Say hello!{" "}
+                  <span role="img" aria-label="waving hand">
+                    👋🏻
+                  </span>
+                </Typography>
+                <Grid item>
+                  <Button
+                    variant="outlined"
+                    style={{ color: "white", borderColor: "white" }}
+                    className={classes.learnButton}
+                  >
+                    <span style={{ marginRight: 10 }}>Learn More</span>
+                    <ButtonArrow width={10} height={10} fill="white" />
+                    </Button>
+                  </Grid>
+                </Grid>
+              </Grid>
+            </Grid>
+          </Grid>
+        </Grid>
       </Grid>
     </>
     )
